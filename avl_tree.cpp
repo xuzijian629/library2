@@ -137,7 +137,7 @@ public:
     int count_lt(T val) {
         int l = -1, r = s;
         while (r - l > 1) {
-            int m = l + (r - l) / 2;
+            int m = (l + r) / 2;
             if (get_kth_small(m) < val) {
                 l = m;
             } else {
@@ -149,7 +149,7 @@ public:
     int count_le(T val) {
         int l = -1, r = s;
         while (r - l > 1) {
-            int m = l + (r - l) / 2;
+            int m = (l + r) / 2;
             if (get_kth_small(m) <= val) {
                 l = m;
             } else {
@@ -161,7 +161,7 @@ public:
     int count_gt(T val) {
         int l = -1, r = s;
         while (r - l > 1) {
-            int m = l + (r - l) / 2;
+            int m = (l + r) / 2;
             if (get_kth_big(m) > val) {
                 l = m;
             } else {
@@ -173,7 +173,7 @@ public:
     int count_ge(T val) {
         int l = -1, r = s;
         while (r - l > 1) {
-            int m = l + (r - l) / 2;
+            int m = (l + r) / 2;
             if (get_kth_big(m) >= val) {
                 l = m;
             } else {
