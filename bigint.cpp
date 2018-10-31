@@ -2,6 +2,7 @@
 using namespace std;
 using i64 = int64_t;
 using vi = vector<i64>;
+using vvi = vector<vi>;
 
 // 負の数は扱っていない
 // 宣言するときはconvert関数を使う
@@ -52,26 +53,25 @@ bool operator==(BigInt x, BigInt y) {
 }
 
 BigInt normal(BigInt x, bool all = false) {
-    i64 c = 0;
     if (all) {
         x.size = int(x.digit.size()) - 1;
     }
     for (int i = 0; i < x.size; i++) {
         while (x.digit[i] < 0) {
-            x.digit[i + 1] -= 1;
-            x.digit[i] += BASE;
+            x.digit[i + 1] -= (-x.digit[i] + BASE - 1) / BASE;
+            x.digit[i] = x.digit[i] % BASE + BASE;
         }
         while (x.digit[i] >= BASE) {
-            x.digit[i + 1] += 1;
-            x.digit[i] -= BASE;
+            x.digit[i + 1] += x.digit[i] / BASE;
+            x.digit[i] = x.digit[i] % BASE;
         }
-        i64 a = x.digit[i] + c;
-        x.digit[i] = a % BASE;
-        c = a / BASE;
     }
-    for (; c > 0; c /= BASE) {
-        x.digit[x.size++] = c % BASE;
+    while (x.digit[x.size]) {
+        x.digit[x.size + 1] = x.digit[x.size] / BASE;
+        x.digit[x.size] = x.digit[x.size] % BASE;
+        x.size++;
     }
+    
     while (x.size > 1 && x.digit[x.size - 1] == 0) {
         x.size--;
     }
@@ -84,7 +84,7 @@ BigInt convert(i64 a) {
 
 BigInt convert(const string& s) {
     BigInt x;
-    assert(s.size() / BASELOG <= x.digit.size() / 2);
+    x.size = 0;
     int i = s.size() % BASELOG;
     if (i > 0) {
         i -= BASELOG;
@@ -215,19 +215,50 @@ i64 operator%(BigInt x, i64 a) {
 }
 
 int main() {
-    string a;
-    cin >> a;
-    if (a == "1" || a == "2") {
-        cout << "I'm sorry, Hexy" << endl;
-        return 0;
-    }
-    BigInt A = convert(a);
-    if ((a.back() - '0') % 2) {
-        BigInt m = (A + convert(1)) / 2, n = (A - convert(1)) / 2;
-        cout << m * n * 2 << " " << m * m + n * n << endl;
-    } else {
-        BigInt m = A / 2;
-        BigInt M = m * m;
-        cout << M - convert(1) << " " << M + convert(1) << endl;
+    int n;
+    cin >> n;
+    regex re("^(\\D*)(\\d+)(.*)$"), re2("^(0*)([1-9]\\d*)$");
+    string s;
+    getline(cin, s);
+    while (n--) {
+        getline(cin, s);
+        reverse(s.begin(), s.end());
+        smatch m;
+        if (regex_search(s, m, re)) {
+            string t = "";
+            string u = m[3];
+            reverse(u.begin(), u.end());
+            t += u;
+            u = m[2];
+            reverse(u.begin(), u.end());
+            smatch m2;
+            if (regex_search(u, m2, re2)) {
+                string m21 = m2[1], m22 = m2[2];
+                BigInt x = convert(m22);
+                x = x + convert(1);
+                if (m21.size() == 0) {
+                    t += to_string(x);
+                } else {
+                    if (m22.size() == to_string(x).size()) {
+                        t += m21;
+                        t += to_string(x);
+                    } else {
+                        assert(m22.size() + 1 == to_string(x).size());
+                        t += m21.substr(0, m21.size() - 1);
+                        t += to_string(x);
+                    }
+                }
+            } else {
+                t += u.substr(0, u.size() - 1);
+                t += '1';
+            }
+            u = m[1];
+            reverse(u.begin(), u.end());
+            t += u;
+            cout << t << endl;
+        } else {
+            reverse(s.begin(), s.end());
+            cout << s << endl;
+        }
     }
 }
