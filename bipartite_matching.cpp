@@ -5,7 +5,8 @@ using vi = vector<i64>;
 using vvi = vector<vi>;
 
 class BipartiteMatching {
-    int n;
+    int n, n0;
+    int mode;
     vvi adj;
     vi mc;
     vi used;
@@ -24,11 +25,21 @@ class BipartiteMatching {
         return false;
     }
 public:
-    BipartiteMatching(int n) : n(n), adj(n), mc(n, -1) {}
+    BipartiteMatching(int n) : n(n), adj(n), mc(n, -1) {
+        mode = 0;
+    }
+    BipartiteMatching(int n, int m) : n(n + m), n0(n), adj(n + m), mc(n + m, -1) {
+        mode = 1;
+    }
 
     void addEdge(int u, int v) {
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+        if (mode == 0) {
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        } else {
+            adj[u].push_back(n0 + v);
+            adj[n0 + v].push_back(u);
+        }
     }
 
     int match() {
@@ -50,22 +61,14 @@ public:
 };
 
 int main() {
-    int n;
-    cin >> n;
-    BipartiteMatching match(n + 50);
-    for (int i = 0; i < n; i++) {
-        int a;
-        cin >> a;
-        for (int j = 0; j < n; j++) {
-            if (a == j) continue;
-            match.addEdge(i, n + j);
-        }
+    int x, y, e;
+    cin >> x >> y >> e;
+    BipartiteMatching match(x, y);
+    for (int i = 0; i < e; i++) {
+        int a, b;
+        cin >> a >> b;
+        match.addEdge(a, b);
     }
-    if (match.match() != n) {
-        cout << -1 << endl;
-        return 0;
-    }
-    for (int i = 0; i < n; i++) {
-        cout << match[i] - n << endl;
-    }
+
+    cout << match.match() << endl;
 }
