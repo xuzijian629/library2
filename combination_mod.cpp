@@ -20,7 +20,7 @@ i64 modinv(i64 a, i64 mod) {
 }
 
 struct Combination {
-    const int MAX_N = 1 << 20;
+    const int MAX_N = 1 << 21;
     vi fact = vi(MAX_N);
     vi factinv = vi(MAX_N);
 
@@ -39,11 +39,38 @@ struct Combination {
         if (r < 0 || r > n) return 0;
         return fact[n] * factinv[r] % MOD * factinv[n - r] % MOD;
     }
+
+    i64 npr(i64 n, i64 r) {
+        if (r < 0 || r > n) return 0;
+        return fact[n] * factinv[n - r] % MOD;
+    }
+
+    i64 nhr(i64 n, i64 r) {
+        if (n == 0 && r == 0) return 1;
+        return ncr(n + r - 1, r);
+    }
 };
 
 int main() {
-    int n;
-    cin >> n;
-    Combination c;
-    cout << c.ncr(10 + n - 1, n) << endl;
-}
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    int t;
+    cin >> t;
+    Combination comb;
+    while (t--) {
+        char c;
+        i64 n, k;
+        cin >> c;
+        if (c == 'C') {
+            cin >> c >> n >> c >> k >> c;
+            cout << comb.ncr(n, k) << '\n';
+        } else if (c == 'P') {
+            cin >> c >> n >> c >> k >> c;
+            cout << comb.npr(n, k) << '\n';
+        } else {
+            cin >> c >> n >> c >> k >> c;
+            cout << comb.nhr(n, k) << '\n';
+        }
+    }
+} 
