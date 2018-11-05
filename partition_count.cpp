@@ -1,19 +1,18 @@
-// NOT VERIFIED
 #include <bits/stdc++.h>
 using namespace std;
 using i64 = int64_t;
 using vi = vector<i64>;
 using vvi = vector<vi>;
-constexpr i64 MOD = 1000000000;
+constexpr i64 MOD = 1e9 + 7;
 
 i64 partition_count(int n, int m, i64 mod) {
-    // divide n items by m people
+    // divide n (undistinguished) items into m (undistinguished) groups, groups can have 0 items
     vvi dp(m + 1, vi(n + 1));
     dp[0][0] = 1;
     for (int i = 1; i <= m; i++) {
         for (int j = 0; j <= n; j++) {
             if (j - i >= 0) {
-                dp[i][j] = (dp[i - 1][j] + dp[i][j - 1]) % mod;
+                dp[i][j] = (dp[i - 1][j] + dp[i][j - i]) % mod;
             } else {
                 dp[i][j] = dp[i - 1][j];
             }
@@ -23,13 +22,7 @@ i64 partition_count(int n, int m, i64 mod) {
 }
 
 int main() {
-    i64 n;
-    cin >> n;
-    n /= 1000;
-    
-    i64 m;
-    cin >> m;
-    
-    n %= m;
-    cout << partition_count(n, m, MOD) << endl;
+    int n, k;
+    cin >> n >> k;
+    cout << partition_count(n, k, MOD) << endl;
 }
