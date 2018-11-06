@@ -6,7 +6,7 @@ using vvi = vector<vi>;
 
 class Dinic {
     struct edge {
-        int to, cap, rev;
+        i64 to, cap, rev;
     };
 
     int n;
@@ -32,12 +32,12 @@ class Dinic {
         }
     }
 
-    int dfs(int v, int t, int f) {
+    i64 dfs(int v, int t, i64 f) {
         if (v == t) return f;
         for (int i = iter[v]; i < G[v].size(); i++) {
             edge &e = G[v][i];
             if (e.cap > 0 && level[v] < level[e.to]) {
-                int d = dfs(e.to, t, min(f, e.cap));
+                i64 d = dfs(e.to, t, min(f, e.cap));
                 if (d > 0) {
                     e.cap -= d;
                     G[e.to][e.rev].cap += d;
@@ -51,19 +51,19 @@ class Dinic {
 public:
     Dinic(int n) : n(n), G(n), level(n), iter(n) {}
 
-    void addEdge(int from, int to, int cap) {
+    void addEdge(int from, int to, i64 cap) {
         G[from].push_back({to, cap, int(G[to].size())});
         G[to].push_back({from, 0, int(G[from].size()) - 1});
     }
 
-    int max_flow(int s, int t) {
-        int flow = 0;
+    i64 max_flow(int s, int t) {
+        i64 flow = 0;
         while (1) {
             bfs(s);
             if (level[t] < 0) return flow;
             iter.assign(n, 0);
-            int f;
-            while ((f = dfs(s, t, 1e9)) > 0) {
+            i64 f;
+            while ((f = dfs(s, t, 1e18)) > 0) {
                 flow += f;
             }
         }
@@ -71,14 +71,22 @@ public:
 };
 
 int main() {
-    int v, e;
-    cin >> v >> e;
-    Dinic d(v);
-    for (int i = 0; i < e; i++) {
-        int u, v, c;
-        cin >> u >> v >> c;
-        d.addEdge(u, v, c);
+    int n, m, p, g;
+    cin >> n >> m >> p >> g;
+
+    Dinic d(m + 1);
+    
+    for (int i = 0; i < g; i++) {
+        int l;
+        cin >> l;
+        d.addEdge(m, l, 1e9);
     }
 
-    cout << d.max_flow(0, v - 1) << endl;
+    for (int i = 0; i < n; i++) {
+        int from, to, cap;
+        cin >> from >> to >> cap;
+        d.addEdge(from, to, cap);
+    }
+
+    cout << (d.max_flow(m, 0) >= p ? "Yes" : "No") << endl;
 }
