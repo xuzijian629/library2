@@ -4,261 +4,497 @@ using i64 = int64_t;
 using vi = vector<i64>;
 using vvi = vector<vi>;
 
-// 負の数は扱っていない
-// 宣言するときはconvert関数を使う
-// 掛け算でFFTをやるので畳み込み後の配列の最大要素を1e13程度にして誤差を小さくしたい
-// BASELOGを大きくすると桁数が1/BASELOGになる代わりに配列の要素が指数関数的に大きくなる
-// 掛け算をしないのであれば定数倍早くなるのでBASELOGを大きくするとよい。掛け算をするときは3が精度的に安心
-constexpr i64 BASE = 1000;
-constexpr int BASELOG = 3;
+constexpr i64 BASE = 1000000000;
+constexpr int BASE_DIGITS = 9;
 struct BigInt {
-    // 掛け算のために本来の最大桁数の2倍必要
-    vi digit = vi(1 << 18);
-    int size;
-    BigInt(int size = 1, i64 a = 0) : size(size) {
-        digit[0] = a;
+    vi a;
+    int sign;
+
+    int size() const {
+        if (a.empty()) return 0;
+        int ret = (a.size() - 1) * BASE_DIGITS;
+        i64 ca = a.back();
+        while (ca) {
+            ret++;
+            ca /= 10;
+        }
+        return ret;
     }
-    BigInt(const BigInt& a) {
-        size = a.size;
-        digit = vi(a.digit);
+
+    BigInt pow(const BigInt &v) {
+        BigInt ret = 1, a = *this, b = v;
+        while (!b.isZero()) {
+            if (b % 2) {
+                ret *= a;
+            }
+            a *= a, b /= 2;
+        }
+        return ret;
+    }
+
+    string to_string() {
+        stringstream ss;
+        ss << *this;
+        return ss.str();
+    }
+
+    int sumof() {
+        string s = to_string();
+        int ret = 0;
+        for (char c : s) ret += c - '0';
+        return ret;
+    }
+
+    BigInt() : sign(1) {}
+    BigInt(i64 v) {
+        *this = v;
+    }
+    BigInt(const string &s) {
+        read(s);
+    }
+
+    void operator=(const BigInt &v) {
+        sign = v.sign;
+        a = v.a;
+    }
+
+    void operator=(i64 v) {
+        sign = 1;
+        a.clear();
+        if (v < 0) {
+            sign = -1, v = -v;
+        }
+        for (; v > 0; v = v / BASE) {
+            a.push_back(v % BASE);
+        }
+    }
+
+    BigInt operator+(const BigInt &v) const {
+        if (sign == v.sign) {
+            BigInt res = v;
+            for (int i = 0, carry = 0; i < max(a.size(), v.a.size()) || carry; i++) {
+                if (i == res.a.size()) {
+                    res.a.push_back(0);
+                }
+                res.a[i] += carry + (i < a.size() ? a[i] : 0);
+                carry = res.a[i] >= BASE;
+                if (carry) {
+                    res.a[i] -= BASE;
+                }
+            }
+            return res;
+        }
+        return *this - (-v);
+    }
+
+    BigInt operator-(const BigInt &v) const {
+        if (sign == v.sign) {
+            if (abs() >= v.abs()) {
+                BigInt res = *this;
+                for (int i = 0, carry = 0; i < v.a.size() || carry; i++) {
+                    res.a[i] -= carry + (i < v.a.size() ? v.a[i] : 0);
+                    carry = res.a[i] < 0;
+                    if (carry) {
+                        res.a[i] += BASE;
+                    }
+                }
+                res.trim();
+                return res;
+            }
+            return -(v - *this);
+        }
+        return *this + (-v);
+    }
+
+    void operator*=(i64 v) {
+        if (v < 0) {
+            sign = -sign, v = -v;
+        }
+        for (int i = 0, carry = 0; i < a.size() || carry; i++) {
+            if (i == a.size()) {
+                a.push_back(0);
+            }
+            i64 cur = a[i] * v + carry;
+            carry = cur / BASE;
+            a[i] = cur % BASE;
+        }
+        trim();
+    }
+
+    BigInt operator*(i64 v) const {
+        BigInt res = *this;
+        res *= v;
+        return res;
+    }
+
+    friend pair<BigInt, BigInt> divmod(const BigInt &a1, const BigInt &b1) {
+        i64 norm = BASE / (b1.a.back() + 1);
+        BigInt a = a1.abs() * norm;
+        BigInt b = b1.abs() * norm;
+        BigInt q, r;
+        q.a.resize(a.a.size());
+
+        for (int i = int(a.a.size()) - 1; i >= 0; i--) {
+            r *= BASE;
+            r += a.a[i];
+            i64 s1 = r.a.size() <= b.a.size() ? 0 : r.a[b.a.size()];
+            i64 s2 = r.a.size() <= b.a.size() - 1 ? 0 : r.a[b.a.size() - 1];
+            i64 d = (BASE * s1 + s2) / b.a.back();
+            r -= b * d;
+            while (r < 0) {
+                r += b, d--;
+            }
+            q.a[i] = d;
+        }
+
+        q.sign = a1.sign * b1.sign;
+        r.sign = a1.sign;
+        q.trim();
+        r.trim();
+        return make_pair(q, r / norm);
+    }
+
+    BigInt operator/(const BigInt &v) const {
+        return divmod(*this, v).first;
+    }
+
+    BigInt operator%(const BigInt &v) const {
+        return divmod(*this, v).second;
+    }
+
+    void operator/=(i64 v) {
+        if (v < 0) {
+            sign = -sign, v = -v;
+        }
+        for (int i = int(a.size()) - 1, rem = 0; i >= 0; i--) {
+            i64 cur = a[i] + rem * BASE;
+            a[i] = cur / v;
+            rem = cur % v;
+        }
+        trim();
+    }
+
+    BigInt operator/(i64 v) const {
+        BigInt res = *this;
+        res /= v;
+        return res;
+    }
+
+    i64 operator%(i64 v) const {
+        if (v < 0) v = -v;
+        i64 m = 0;
+        for (int i = int(a.size()) - 1; i >= 0; i--) {
+            m = (a[i] + m * BASE) % v;
+        }
+        return m * sign;
+    }
+
+    void operator+=(const BigInt &v) {
+        *this = *this + v;
+    }
+
+    void operator-=(const BigInt &v) {
+        *this = *this - v;
+    }
+
+    void operator*=(const BigInt &v) {
+        *this = *this * v;
+    }
+
+    void operator/=(const BigInt &v) {
+        *this = *this / v;
+    }
+
+    bool operator<(const BigInt &v) const {
+        if (sign != v.sign) {
+            return sign < v.sign;
+        }
+        if (a.size() != v.a.size()) {
+            return a.size() * sign < v.a.size() * sign;
+        }
+        for (int i = int(a.size()) - 1; i >= 0; i--) {
+            if (a[i] != v.a[i]) {
+                return a[i] * sign < v.a[i] * sign;
+            }
+        }
+        return false;
+    }
+
+    bool operator>(const BigInt &v) const {
+        return v < *this;
+    }
+
+    bool operator<=(const BigInt &v) const {
+        return !(v < *this);
+    }
+
+    bool operator>=(const BigInt &v) const {
+        return !(*this < v);
+    }
+
+    bool operator==(const BigInt &v) const {
+        return !(*this < v) && !(v < *this);
+    }
+
+    bool operator!=(const BigInt &v) const {
+        return *this < v || v < *this;
+    }
+
+    void trim() {
+        while (!a.empty() && !a.back()) {
+            a.pop_back();
+        }
+        if (a.empty()) {
+            sign = 1;
+        }
+    }
+
+    bool isZero() const {
+        return a.empty() || (a.size() == 1 && !a[0]);
+    }
+
+    BigInt operator-() const {
+        BigInt res = *this;
+        res.sign = -sign;
+        return res;
+    }
+
+    BigInt abs() const {
+        BigInt res = *this;
+        res.sign = 1;
+        return res;
+    }
+
+    i64 i64Value() const {
+        i64 res = 0;
+        for (int i = int(a.size()) - 1; i >= 0; i--) {
+            res = res * BASE + a[i];
+        }
+        return res * sign;
+    }
+
+    friend BigInt gcd(const BigInt &a, const BigInt &b) {
+        return b.isZero() ? a : gcd(b, a % b);
+    }
+    friend BigInt lcm(const BigInt &a, const BigInt &b) {
+        return a / gcd(a, b) * b;
+    }
+
+    void read(const string &s) {
+        sign = 1;
+        a.clear();
+        int pos = 0;
+        while (pos < s.size() && (s[pos] == '-' || s[pos] == '+')) {
+            if (s[pos] == '-') {
+                sign = -sign;
+            }
+            pos++;
+        }
+        for (int i = int(s.size()) - 1; i >= pos; i -= BASE_DIGITS) {
+            i64 x = 0;
+            for (int j = max(pos, i - BASE_DIGITS + 1); j <= i; j++) {
+                x = x * 10 + s[j] - '0';
+            }
+            a.push_back(x);
+        }
+        trim();
+    }
+
+    friend istream& operator>>(istream &stream, BigInt &v) {
+        string s;
+        stream >> s;
+        v.read(s);
+        return stream;
+    }
+
+    friend ostream& operator<<(ostream &stream, const BigInt &v) {
+        if (v.sign == -1) {
+            stream << '-';
+        }
+        stream << (v.a.empty() ? 0 : v.a.back());
+        for (int i = int(v.a.size()) - 2; i >= 0; i--) {
+            stream << setw(BASE_DIGITS) << setfill('0') << v.a[i];
+        }
+        return stream;
+    }
+
+    static vi convert_base(const vi &a, int old_digits, int new_digits) {
+        vi p(max(old_digits, new_digits) + 1);
+        p[0] = 1;
+        for (int i = 1; i < p.size(); i++) {
+            p[i] = p[i - 1] * 10;
+        }
+        vi res;
+        i64 cur = 0;
+        int cur_digits = 0;
+        for (int i = 0; i < a.size(); i++) {
+            cur += a[i] * p[cur_digits];
+            cur_digits += old_digits;
+            while (cur_digits >= new_digits) {
+                res.push_back(cur % p[new_digits]);
+                cur /= p[new_digits];
+                cur_digits -= new_digits;
+            }
+        }
+        res.push_back(cur);
+        while (!res.empty() && !res.back()) {
+            res.pop_back();
+        }
+        return res;
+    }
+
+    static vi karatsuba(const vi &a, const vi &b) {
+        int n = a.size();
+        vi res(n * 2);
+        if (n <= 32) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    res[i + j] += a[i] * b[j];
+                }
+            }
+            return res;
+        }
+
+        int k = n >> 1;
+        vi a1(a.begin(), a.begin() + k);
+        vi a2(a.begin() + k, a.end());
+        vi b1(b.begin(), b.begin() + k);
+        vi b2(b.begin() + k, b.end());
+
+        vi a1b1 = karatsuba(a1, b1);
+        vi a2b2 = karatsuba(a2, b2);
+
+        for (int i = 0; i < k; i++) {
+            a2[i] += a1[i];
+            b2[i] += b1[i];
+        }
+
+        vi r = karatsuba(a2, b2);
+        for (int i = 0; i < a1b1.size(); i++) {
+            r[i] -= a1b1[i];
+        }
+        for (int i = 0; i < a2b2.size(); i++) {
+            r[i] -= a2b2[i];
+        }
+
+        for (int i = 0; i < r.size(); i++) {
+            res[i + k] += r[i];
+        }
+        for (int i = 0; i < a1b1.size(); i++) {
+            res[i] += a1b1[i];
+        }
+        for (int i = 0; i < a2b2.size(); i++) {
+            res[i + n] += a2b2[i];
+        }
+        return res;
+    }
+
+    BigInt karatsubaMultiply(const BigInt &v) const {
+        vi a = convert_base(this->a, BASE_DIGITS, 6);
+        vi b = convert_base(v.a, BASE_DIGITS, 6);
+        while (a.size() < b.size()) {
+            a.push_back(0);
+        }
+        while (b.size() < a.size()) {
+            b.push_back(0);
+        }
+        while (a.size() & (a.size() - 1)) {
+            a.push_back(0);
+            b.push_back(0);
+        }
+        vi c = karatsuba(a, b);
+        BigInt res;
+        res.sign = sign * v.sign;
+        for (int i = 0, carry = 0; i < c.size(); i++) {
+            i64 cur = c[i] + carry;
+            res.a.push_back(cur % 1000000);
+            carry = cur / 1000000;
+        }
+        res.a = convert_base(res.a, 6, BASE_DIGITS);
+        res.trim();
+        return res;
+    }
+
+    static void fft(vector<complex<double>> &a, bool inv = false) {
+        int n = int(a.size());
+        if (n == 1) return;
+        vector<complex<double>> even(n / 2), odd(n / 2);
+        for (int i = 0; i < n / 2; i++) {
+            even[i] = a[2 * i];
+            odd[i] = a[2 * i + 1];
+        }
+        fft(even, inv);
+        fft(odd, inv);
+        complex<double> omega = polar(1.0, (-2 * inv + 1) * 2 * acos(-1) / n);
+        complex<double> pow_omega = 1.0;
+        for (int i = 0; i < n / 2; i++) {
+            a[i] = even[i] + pow_omega * odd[i];
+            a[i + n / 2] = even[i] - pow_omega * odd[i];
+            pow_omega *= omega;
+        }
+    }
+
+    static void conv(vector<complex<double>> &a, vector<complex<double>> &b) {
+        fft(a);
+        fft(b);
+        int n = int(a.size());
+        for (int i = 0; i < n; i++) {
+            a[i] *= b[i] / complex<double>(n);
+        }
+        fft(a, true);
+    }
+
+    static vi conv(const vi &a, const vi &b) {
+        int n = max(a.size(), b.size());
+        int N = 1;
+        while (N <= n) N <<= 1;
+        N <<= 1;
+        vector<complex<double>> ac(N), bc(N);
+        for (int i = 0; i < a.size(); i++) {
+            ac[i] = a[i];
+        }
+        for (int i = 0; i < b.size(); i++) {
+            bc[i] = b[i];
+        }
+        conv(ac, bc);
+        vi ret(ac.size());
+        for (int i = 0; i < ac.size(); i++) {
+            ret[i] = long(real(ac[i]) + 0.5);
+        }
+        return ret;
+    }
+    
+    BigInt fftMultiply(const BigInt &v) const {
+        vi a = convert_base(this->a, BASE_DIGITS, 1);
+        vi b = convert_base(v.a, BASE_DIGITS, 1);
+        vi c = conv(a, b);
+        BigInt res;
+        res.sign = sign * v.sign;
+        for (int i = 0, carry = 0; i < c.size(); i++) {
+            i64 cur = c[i] + carry;
+            res.a.push_back(cur % 10);
+            carry = cur / 10;
+        }
+        res.a = convert_base(res.a, 1, BASE_DIGITS);
+        res.trim();
+        return res;
+    }
+    
+    BigInt operator*(const BigInt &v) const {
+        if (max(size(), v.size()) < 300000) {
+            return karatsubaMultiply(v);
+        } else {
+            return fftMultiply(v);
+        }
     }
 };
 
-bool operator<(BigInt x, BigInt y) {
-    if (x.size != y.size) {
-        return x.size < y.size;
-    }
-    for (int i = x.size - 1; i >= 0; i--) {
-        if (x.digit[i] != y.digit[i]) {
-            return x.digit[i] < y.digit[i];
-        }
-    }
-    return false;
-}
-
-bool operator>(BigInt x, BigInt y) {
-    return y < x;
-}
-bool operator<=(BigInt x, BigInt y) {
-    return !(y < x);
-}
-bool operator>=(BigInt x, BigInt y) {
-    return !(x < y);
-}
-bool operator!=(BigInt x, BigInt y) {
-    return x < y || y < x;
-}
-bool operator==(BigInt x, BigInt y) {
-    return !(x < y) && !(y < x);
-}
-
-BigInt normal(BigInt x, bool all = false) {
-    if (all) {
-        x.size = int(x.digit.size()) - 1;
-    }
-    for (int i = 0; i < x.size; i++) {
-        while (x.digit[i] < 0) {
-            x.digit[i + 1] -= (-x.digit[i] + BASE - 1) / BASE;
-            x.digit[i] = x.digit[i] % BASE + BASE;
-        }
-        while (x.digit[i] >= BASE) {
-            x.digit[i + 1] += x.digit[i] / BASE;
-            x.digit[i] = x.digit[i] % BASE;
-        }
-    }
-    while (x.digit[x.size]) {
-        x.digit[x.size + 1] = x.digit[x.size] / BASE;
-        x.digit[x.size] = x.digit[x.size] % BASE;
-        x.size++;
-    }
-    
-    while (x.size > 1 && x.digit[x.size - 1] == 0) {
-        x.size--;
-    }
-    return x;
-}
-
-BigInt convert(i64 a) {
-    return normal(BigInt(1, a), true);
-}
-
-BigInt convert(const string& s) {
-    BigInt x;
-    x.size = 0;
-    int i = s.size() % BASELOG;
-    if (i > 0) {
-        i -= BASELOG;
-    }
-    for (; i < int(s.size()); i += BASELOG) {
-        i64 a = 0;
-        for (int j = 0; j < BASELOG; j++) {
-            a = 10 * a + (i + j >= 0 ? s[i + j] - '0' : 0);
-        }
-        x.digit[x.size++] = a;
-    }
-    reverse(x.digit.begin(), x.digit.begin() + x.size);
-    return normal(x);
-}
-
-ostream &operator<<(ostream& os, BigInt x) {
-    os << x.digit[x.size - 1];
-    for (int i = x.size - 2; i >= 0; i--) {
-        os << setw(BASELOG) << setfill('0') << x.digit[i];
-    }
-    return os;
-}
-
-istream &operator>>(istream& is, BigInt &x) {
-    string s;
-    is >> s;
-    x = convert(s);
-    return is;
-}
-
-string to_string(BigInt &x) {
-    stringstream ss;
-    ss << x.digit[x.size - 1];
-    for (int i = x.size - 2; i >= 0; i--) {
-        ss << setw(BASELOG) << setfill('0') << x.digit[i];
-    }
-    return ss.str();
-}
-
-BigInt operator+(BigInt x, BigInt y) {
-    if (x.size < y.size) {
-        x.size = y.size;
-    }
-    for (int i = 0; i < y.size; i++) {
-        x.digit[i] += y.digit[i];
-    }
-    return normal(x);
-}
-
-BigInt operator-(BigInt x, BigInt y) {
-    assert(x >= y);
-    for (int i = 0; i < y.size; i++) {
-        x.digit[i] -= y.digit[i];
-    }
-    return normal(x);
-}
-
-BigInt operator*(BigInt x, i64 a) {
-    for (int i = 0; i < x.size; i++) {
-        x.digit[i] *= a;
-    }
-    return normal(x);
-}
-
-void fft(vector<complex<double>>& a, bool inv = false) {
-    int n = int(a.size());
-    if (n == 1) return;
-    vector<complex<double>> even(n / 2), odd(n / 2);
-    for (int i = 0; i < n / 2; i++) {
-        even[i] = a[2 * i];
-        odd[i] = a[2 * i + 1];
-    }
-    fft(even, inv);
-    fft(odd, inv);
-    complex<double> omega = polar(1.0, (-2 * inv + 1) * 2 * acos(-1) / n);
-    complex<double> pow_omega = 1.0;
-    for (int i = 0; i < n / 2; i++) {
-        a[i] = even[i] + pow_omega * odd[i];
-        a[i + n / 2] = even[i] - pow_omega * odd[i];
-        pow_omega *= omega;
-    }
-}
-
-void conv(vector<complex<double>>& a, vector<complex<double>>& b) {
-    fft(a);
-    fft(b);
-    int n = int(a.size());
-    for (int i = 0; i < n; i++) {
-        a[i] *= b[i] / complex<double>(n);
-    }
-    fft(a, true);
-}
-
-void conv(vi& a, vi& b) {
-    vector<complex<double>> ac, bc;
-    for (int i = 0; i < a.size(); i++) {
-        ac.push_back(a[i]);
-        bc.push_back(b[i]);
-    }
-    conv(ac, bc);
-    a.resize(ac.size());
-    for (int i = 0; i < ac.size(); i++) {
-        a[i] = long(real(ac[i]) + 0.5);
-    }
-}
-
-BigInt operator*(BigInt x, BigInt y) {
-    conv(x.digit, y.digit);
-    return normal(x, true);
-}
-
-pair<BigInt, i64> divmod(BigInt x, i64 a) {
-    i64 c = 0, t;
-    for (int i = x.size - 1; i >= 0; i--) {
-        t = BASE * c + x.digit[i];
-        x.digit[i] = t / a;
-        c = t % a;
-    }
-    return pair<BigInt, i64>(normal(x), c);
-}
-
-BigInt operator/(BigInt x, i64 a) {
-    return divmod(x, a).first;
-}
-
-i64 operator%(BigInt x, i64 a) {
-    return divmod(x, a).second;
-}
-
 int main() {
-    int n;
-    cin >> n;
-    regex re("^(\\D*)(\\d+)(.*)$"), re2("^(0*)([1-9]\\d*)$");
-    string s;
-    getline(cin, s);
-    while (n--) {
-        getline(cin, s);
-        reverse(s.begin(), s.end());
-        smatch m;
-        if (regex_search(s, m, re)) {
-            string t = "";
-            string u = m[3];
-            reverse(u.begin(), u.end());
-            t += u;
-            u = m[2];
-            reverse(u.begin(), u.end());
-            smatch m2;
-            if (regex_search(u, m2, re2)) {
-                string m21 = m2[1], m22 = m2[2];
-                BigInt x = convert(m22);
-                x = x + convert(1);
-                if (m21.size() == 0) {
-                    t += to_string(x);
-                } else {
-                    if (m22.size() == to_string(x).size()) {
-                        t += m21;
-                        t += to_string(x);
-                    } else {
-                        assert(m22.size() + 1 == to_string(x).size());
-                        t += m21.substr(0, m21.size() - 1);
-                        t += to_string(x);
-                    }
-                }
-            } else {
-                t += u.substr(0, u.size() - 1);
-                t += '1';
-            }
-            u = m[1];
-            reverse(u.begin(), u.end());
-            t += u;
-            cout << t << endl;
-        } else {
-            reverse(s.begin(), s.end());
-            cout << s << endl;
-        }
+    int t;
+    cin >> t;
+    while (t--) {
+        BigInt a, b;
+        cin >> a >> b;
+        cout << a * b << endl;
     }
 }
