@@ -1,51 +1,58 @@
-template <class T>
-class SegTree {
-    using F = function<T(T, T)>;
+#include <bits/stdc++.h>
+using namespace std;
+using i64 = int64_t;
+using vi = vector<i64>;
+using vvi = vector<vi>;
+
+struct SlideMin {
+    // data[i]: mininum over [max(0, i + 1 - width), i + 1)
     int n;
-    vector<T> data;
-    F f;
-    T e;
-
-public:
-    SegTree<T>() {}
-    SegTree<T>& operator=(const SegTree<T>& t) {
-        n = t.n;
-        data = t.data;
-        f = t.f;
-        e = t.e;
-        return *this;
-    }
-
-    SegTree<T>(const vector<T>& as, const F f, const T& e) : f(f), e(e) {
-        n = 1;
-        while (n < as.size()) n <<= 1;
-        data.assign(2 * n, e);
-        for (int i = 0; i < as.size(); i++) {
-            data[n + i] = as[i];
-        }
-        for (int i = n - 1; i > 0; i--) {
-            data[i] = f(data[2 * i], data[2 * i + 1]);
-        }
-    }
-
-    void update(int k, const T& x) {
-        k += n;
-        data[k] = x;
-        while (k >>= 1) {
-            data[k] = f(data[2 * k], data[2 * k + 1]);
-        }
-    }
-
-    T query(int a, int b) {
-        T L = e, R = e;
-        for (a += n, b += n; a < b; a >>= 1, b >>= 1) {
-            if (a & 1) {
-                L = f(L, data[a++]);
+    vi data;
+    SlideMin(const vi &as, int width, bool minimum = true) : n(as.size()), data(as.size()) {
+        using ii = pair<i64, int>;
+        deque<ii> deq;
+        auto comp = [&](ii &e, i64 v) {
+            return minimum ? e.first >= v : e.first <= v;
+        };
+        for (int i = 0; i < n; i++) {
+            if (deq.size() && deq.front().second <= i - width) {
+                deq.pop_front();
             }
-            if (b & 1) {
-                R = f(data[--b], R);
+            while (deq.size()) {
+                if (comp(deq.back(), as[i])) deq.pop_back();
+                else break;
             }
+            deq.push_back(ii(as[i], i));
+            data[i] = deq.front().first;
         }
-        return f(L, R);
     }
 };
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    int n, m, k;
+    cin >> n >> m >> k;
+    vi as(n);
+    for (int i = 0; i < n; i++) {
+        cin >> as[i];
+    }
+
+    vi dp(as);
+    for (int i = 0; i < k - 1; i++) {
+        SlideMin smax(dp, m, false);
+        for (int j = 0; j < n; j++) {
+            if (j <= i) {
+                dp[j] = 0;
+            } else {
+                dp[j] = smax.data[j - 1] + as[j] * (i + 2);
+            }
+        }
+    }
+    i64 nax = -1;
+    for (int i = 0; i < n; i++) {
+        nax = max(nax, dp[i]);
+    }
+    cout << nax << endl;
+}
