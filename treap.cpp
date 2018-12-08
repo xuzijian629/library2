@@ -169,38 +169,24 @@ class ImplicitTreap {
     }
 
     // [l, r)の中で左から何番目か
-    int find(Tree t, int l, int r, T x, int offset, bool left = true) {
-        if (cnt(t) == 0) return -1;
-        if (cnt(t) == 1) {
-            return (Monoid::op(t->value, x) != x) ? offset : -1;
-        }
-        Tree t1, t2, t3;
-        split(t, l, t1, t2);
-        split(t2, r - l, t2, t3);
-        int ret;
-        if (Monoid::op(t2->acc, x) == x) {
-            ret = -1;
+    int find(Tree t, T x, int offset, bool left = true) {
+        if (Monoid::op(t->acc, x) == x) {
+            return -1;
         } else {
-            int m = (r - l) / 2;
             if (left) {
-                int tmp = find(t2, 0, m, x, offset, left);
-                if (tmp != -1) {
-                    ret = tmp;
+                if (t->l && Monoid::op(t->l->acc, x) != x) {
+                    return find(t->l, x, offset, left);
                 } else {
-                    ret = find(t2, m, r - l, x, offset + m, left);
+                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->r, x, offset + cnt(t->l) + 1, left);
                 }
             } else {
-                int tmp = find(t2, m, r - l, x, offset + m, left);
-                if (tmp != -1) {
-                    ret = tmp;
+                if (t->r && Monoid::op(t->r->acc, x) != x) {
+                    return find(t->r, x, offset + cnt(t->l) + 1, left);
                 } else {
-                    ret = find(t2, 0, m, x, offset, left);
+                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->l, x, offset, left);
                 }
             }
         }
-        merge(t2, t2, t3);
-        merge(t, t1, t2);
-        return ret;
     }
 
     void reverse(Tree t, int l, int r) {
@@ -256,7 +242,13 @@ public:
     // 二分探索。[l, r)内のkでMonoid::op(tr[k], x) != xとなる最左/最右のもの。存在しない場合は-1
     // たとえばMinMonoidの場合、x未満の最左/最右の要素の位置を返す
     int find(int l, int r, T x, bool left = true) {
-        return find(root, l, r, x, l, left);
+        Tree t1, t2, t3;
+        split(root, l, t1, t2);
+        split(t2, r - l, t2, t3);
+        int ret = find(t2, x, l, left);
+        merge(t2, t2, t3);
+        merge(root, t1, t2);
+        return ret;
     }
 
     void erase(int pos) {
