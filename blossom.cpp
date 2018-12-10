@@ -11,13 +11,6 @@ class Blossom {
     vvi conn;
     queue<int> Q;
 
-public:
-    Blossom(int n) : vis(n + 1), par(n + 1), orig(n + 1), match(n + 1), aux(n + 1), N(n), conn(n + 1) {}
-    void addEdge(int u, int v) {
-        assert(1 <= u && u <= N && 1 <= v && v <= N);
-        conn[u].push_back(v);
-        conn[v].push_back(u);
-    }
     void augment(int u, int v) {
         int pv = v, nv;
         do {
@@ -78,6 +71,15 @@ public:
             }
         }
         return false;
+    }
+
+public:
+    Blossom(int n) : vis(n + 1), par(n + 1), orig(n + 1), match(n + 1), aux(n + 1), N(n), conn(n + 1) {}
+    
+    void addEdge(int u, int v) {
+        assert(1 <= u && u <= N && 1 <= v && v <= N);
+        conn[u].push_back(v);
+        conn[v].push_back(u);
     }
 
     int Match() {
