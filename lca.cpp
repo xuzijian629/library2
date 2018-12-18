@@ -58,7 +58,7 @@ public:
 
 class LCA {
     vvi adj;
-    vi vs, depth, id;
+    vi vs, depth, id, D;
     using ii = pair<i64, int>;
     SegTree<ii> segtree;
 
@@ -66,9 +66,10 @@ class LCA {
         id[v] = k;
         vs[k] = v;
         depth[k++] = d;
-        for (int i = 0; i < adj[v].size(); i++) {
-            if (adj[v][i] != p) {
-                dfs(adj[v][i], v, d + 1, k);
+        D[v] = d;
+        for (int s : adj[v]) {
+            if (s != p) {
+                dfs(s, v, d + 1, k);
                 vs[k] = v;
                 depth[k++] = d;
             }
@@ -81,6 +82,7 @@ public:
         vs.assign(2 * n - 1, 0);
         depth.assign(2 * n - 1, 0);
         id.assign(n, 0);
+        D.assign(n, 0);
         int k = 0;
         dfs(0, -1, 0, k);
         vector<ii> ds;
@@ -93,28 +95,30 @@ public:
     int lca(int u, int v) {
         return vs[segtree.query(min(id[u], id[v]), max(id[u], id[v]) + 1).second];
     }
+
+    int dist(int u, int v) {
+        return D[u] + D[v] - 2 * D[lca(u, v)];
+    }
 };
 
 int main() {
     int n;
     cin >> n;
     vvi adj(n);
-    for (int i = 0; i < n; i++) {
-        int t;
-        cin >> t;
-        for (int j = 0; j < t; j++) {
-            int k;
-            cin >> k;
-            adj[i].push_back(k);
-        }
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
-
     LCA lca(adj);
     int q;
     cin >> q;
     while (q--) {
-        int u, v;
-        cin >> u >> v;
-        cout << lca.lca(u, v) << endl;
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        cout << lca.dist(a, b) + 1 << endl;
     }
 }
