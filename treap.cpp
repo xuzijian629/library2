@@ -149,6 +149,7 @@ class ImplicitTreap {
     }
 
     void update(Tree t, int l, int r, T x) {
+        if (l >= r) return;
         Tree t1, t2, t3;
         split(t, l, t1, t2);
         split(t2, r - l, t2 , t3);
@@ -241,7 +242,7 @@ public:
 
     // 二分探索。[l, r)内のkでMonoid::op(tr[k], x) != xとなる最左/最右のもの。存在しない場合は-1
     // たとえばMinMonoidの場合、x未満の最左/最右の要素の位置を返す
-    int find(int l, int r, T x, bool left = true) {
+    int binary_search(int l, int r, T x, bool left = true) {
         Tree t1, t2, t3;
         split(root, l, t1, t2);
         split(t2, r - l, t2, t3);
@@ -269,37 +270,120 @@ public:
     }
 
     T operator[](int pos) {
-        Tree t1, t2, t3;
-        split(root, pos + 1, t1, t2);
-        split(t1, pos, t1, t3);
-        T ret = t3->acc;
-        merge(t1, t1, t3);
-        merge(root, t1, t2);
-        return ret;
+        return query(pos, pos + 1);
     }
 };
 
+struct Q {
+    int type, t, a, b, ans;
+};
+
 int main() {
+    // assert(freopen("/Users/xuzijian/atcoder/paken/input", "r", stdin));
+    // assert(freopen("/Users/xuzijian/atcoder/paken/output", "w", stdout));
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    int n, q;
-    cin >> n >> q;
-    vi as(n);
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    ImplicitTreap<MinMonoid, UpdateMonoid> tr, tr2;
     for (int i = 0; i < n; i++) {
-        cin >> as[i];
+        tr.insert(i, s[i] == 'W');
+        tr2.insert(i, -int(s[i] == 'W'));
     }
-    ImplicitTreap<MinMonoid, UpdateMonoid> tr(as);
-    while (q--) {
-        // tr.dump();
-        int x, y, z;
-        cin >> x >> y >> z;
-        if (x == 0) {
-            tr.rotate(y, z, z + 1);
-        } else if (x == 1) {
-            cout << tr.query(y, z + 1) << endl;
+
+    vector<Q> qs;
+    int m;
+    cin >> m;
+    for (int i = 0; i < m; i++) {
+        char a, b;
+        cin >> a >> b;
+        qs.push_back({0, i, int(a == 'R'), int(b == 'W'), -1});
+    }
+    int q;
+    cin >> q;
+    for (int i = 0; i < q; i++) {
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        qs.push_back({1, a, b, i, -1});
+    }
+
+    sort(qs.begin(), qs.end(), [](Q a, Q b) {
+        return a.t == b.t ? a.type < b.type : a.t < b.t;
+    });
+
+    auto leftmost_black = [&tr]() {
+        return tr.binary_search(0, tr.size(), 1);
+    };
+    auto rightmost_black = [&tr]() {
+        return tr.binary_search(0, tr.size(), 1, false);
+    };
+    auto leftmost_white = [&tr2]() {
+        return tr2.binary_search(0, tr2.size(), 0);
+    };
+    auto rightmost_white = [&tr2]() {
+        return tr2.binary_search(0, tr2.size(), 0, false);
+    };
+
+    for (int i = 0; i < qs.size(); i++) {
+        if (qs[i].type == 0) {
+            // put
+            if (qs[i].b == 0) {
+                // put black
+                if (qs[i].a == 0) {
+                    // left
+                    int k = leftmost_black();
+                    if (k != -1) {
+                        tr.update(0, k, 0);
+                        tr2.update(0, k, 0);
+                    }
+                    tr.insert(0, 0);
+                    tr2.insert(0, 0);
+                } else {
+                    int k = rightmost_black();
+                    if (k != -1) {
+                        tr.update(k, tr.size(), 0);
+                        tr2.update(k, tr2.size(), 0);
+                    }
+                    tr.insert(tr.size(), 0);
+                    tr2.insert(tr2.size(), 0);
+                }
+            } else {
+                // put white
+                if (qs[i].a == 0) {
+                    // left
+                    int k = leftmost_white();
+                    if (k != -1) {
+                        tr.update(0, k, 1);
+                        tr2.update(0, k, -1);
+                    }
+                    tr.insert(0, 1);
+                    tr2.insert(0, -1);
+                } else {
+                    int k = rightmost_white();
+                    if (k != -1) {
+                        tr.update(k, tr.size(), 1);
+                        tr2.update(k, tr2.size(), -1);
+                    }
+                    tr.insert(tr.size(), 1);
+                    tr2.insert(tr2.size(), -1);
+                }
+            }
+            // cout << "turn " << i << endl;
+            // tr.dump();
         } else {
-            tr.update(y, y + 1, z);
+            // query
+            qs[i].ans = tr[qs[i].a];
         }
+    }
+    sort(qs.begin(), qs.end(), [](Q a, Q b) {
+        return a.type == b.type ? a.b < b.b : a.type > b.type;
+    });
+
+    for (int i = 0; i < q; i++) {
+        cout << (qs[i].ans ? 'W' : 'B') << endl;
     }
 }
