@@ -243,6 +243,7 @@ public:
     // 二分探索。[l, r)内のkでMonoid::op(tr[k], x) != xとなる最左/最右のもの。存在しない場合は-1
     // たとえばMinMonoidの場合、x未満の最左/最右の要素の位置を返す
     int binary_search(int l, int r, T x, bool left = true) {
+        if (l >= r) return -1;
         Tree t1, t2, t3;
         split(root, l, t1, t2);
         split(t2, r - l, t2, t3);
