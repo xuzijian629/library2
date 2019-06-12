@@ -313,8 +313,24 @@ public:
         }
         return make_pair(tot_weight, n_matches);
     }
+
+    int get_pair(int a) {
+        return match[a];
+    }
 };
 
 int main() {
-
+    int n, m;
+    cin >> n >> m;
+    BlossomWeighted match(n);
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        match.add_edge(u, v, w);
+    }
+    pair<i64, int> res = match.solve();
+    cout << res.first << endl;
+    for (int i = 0; i < n; i++) {
+        cout << match.get_pair(i) << endl;
+    }
 }

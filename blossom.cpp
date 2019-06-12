@@ -154,13 +154,7 @@ struct MaximizingGCD {
 };
 
 int main() {
-    assert(freopen("/Users/xuzijian/topcoder/srm743/input", "r", stdin));
-    MaximizingGCD hoge;
-    int n;
-    cin >> n;
-    vector<int> as(n);
-    for (int i = 0; i < n; i++) {
-        cin >> as[i];
-    }
-    cout << hoge.maximumGCDPairing(as) << endl;
+    MaximizingGCD solve;
+    vector<int> as = {505, 796395095, 891890495, 554953895, 808647335, 581980895, 808647335, 808647335, 655854695, 953512055, 459458495, 943421975, 514593575, 714713495, 814773455, 892370975, 843241895, 796395095, 349188335, 349188335, 554953895, 937295855, 972971495, 673872695, 810809495, 892370975, 843241895, 972971495, 972971495, 937295855};
+    cout << solve.maximumGCDPairing(as) << endl;
 }

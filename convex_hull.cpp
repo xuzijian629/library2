@@ -80,7 +80,7 @@ struct Rational {
         return !(rhs < *this);
     }
     bool operator>=(const Rational& rhs) const {
-        return !(*this > rhs);
+        return !(*this < rhs);
     }
     bool operator==(const Rational& rhs) const {
         return !(*this < rhs) && !(rhs < *this);
@@ -165,6 +165,7 @@ val_t dist2(const Point &p, const Segment &segment) {
     return dist2(segment, p);
 }
 val_t dist2(const Segment &a, const Segment &b) {
+		if (is_crossing(a, b)) return val_t(0);
     return min({dist2(a, b.first), dist2(a, b.second), dist2(b, a.first), dist2(b, a.second)});
 }
 
@@ -255,4 +256,3 @@ int main() {
         }
     }
 }
-
