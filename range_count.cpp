@@ -1,14 +1,14 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
 class RangeCount {
     const int ST_SIZE = (1 << 20) - 1;
     int n;
-    vi data;
-    vvi segtree;
+    vector<int> data;
+    vector<vector<int>> segtree;
 
     void init(int k, int l, int r) {
         if (r - l == 1) {
@@ -20,12 +20,13 @@ class RangeCount {
             init(rch, (l + r) / 2, r);
             segtree[k].resize(r - l);
 
-            merge(segtree[lch].begin(), segtree[lch].end(), segtree[rch].begin(), segtree[rch].end(), segtree[k].begin());
+            merge(segtree[lch].begin(), segtree[lch].end(), segtree[rch].begin(), segtree[rch].end(),
+                  segtree[k].begin());
         }
     }
 
     // number of x in [i, j)
-    int query(int i, int j, i64 x, int k, int l, int r) {
+    int query(int i, int j, int x, int k, int l, int r) {
         if (j <= l || r <= i) {
             return 0;
         }
@@ -40,39 +41,39 @@ class RangeCount {
     }
 
 public:
-    RangeCount(vi v) {
+    RangeCount(const vector<int> &v) {
         n = v.size();
-        data = vi(v);
-        segtree = vvi(ST_SIZE);
+        data = vector<int>(v);
+        segtree = vector<vector<int>>(ST_SIZE);
         init(0, 0, n);
     }
 
-    int exact(int i, int j, i64 x) {
+    int exact(int i, int j, int x) {
         return query(i, j, x, 0, 0, n) - query(i, j, x - 1, 0, 0, n);
     }
 
-    int le(int i, int j, i64 x) {
+    int le(int i, int j, int x) {
         return query(i, j, x, 0, 0, n);
     }
 
-    int lt(int i, int j, i64 x) {
+    int lt(int i, int j, int x) {
         return query(i, j, x - 1, 0, 0, n);
     }
 
-    int ge(int i, int j, i64 x) {
-        return query(i, j, 1e18, 0, 0, n) - query(i, j, x - 1, 0, 0, n);
+    int ge(int i, int j, int x) {
+        return query(i, j, 1e9, 0, 0, n) - query(i, j, x - 1, 0, 0, n);
     }
 
-    int gt(int i, int j, i64 x) {
-        return query(i, j, 1e18, 0, 0, n) - query(i, j, x, 0, 0, n);
+    int gt(int i, int j, int x) {
+        return query(i, j, 1e9, 0, 0, n) - query(i, j, x, 0, 0, n);
     }
 };
 
 int main() {
     int n;
     cin >> n;
-    vi vs(n);
-    i64 ans = 0;
+    vector<int> vs(n);
+    int ans = 0;
     for (int i = 0; i < n; i++) {
         cin >> vs[i];
         vs[i]--;

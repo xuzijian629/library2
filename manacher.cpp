@@ -1,12 +1,11 @@
+// added
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
-vi manacher(string s) {
+using namespace std;
+
+vector<int> manacher(const string &s) {
     int n = s.size();
-    vi ret(n);
+    vector<int> ret(n);
     for (int i = 0, j = 0; i < n;) {
         while (i - j >= 0 && i + j < n && s[i - j] == s[i + j]) j++;
         ret[i] = j;
@@ -31,6 +30,6 @@ int main() {
         t += c;
         t += '$';
     }
-    vi m = manacher(t);
+    vector<int> m = manacher(t);
     cout << *max_element(m.begin(), m.end()) - 1 << endl;
 }

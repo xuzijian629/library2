@@ -1,9 +1,11 @@
-#include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
+// added
 
-i64 extgcd(i64 a, i64 b, i64& x, i64& y) {
-    i64 g = a;
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int extgcd(int a, int b, int &x, int &y) {
+    int g = a;
     x = 1, y = 0;
     if (b) {
         g = extgcd(b, a % b, y, x);
@@ -13,7 +15,7 @@ i64 extgcd(i64 a, i64 b, i64& x, i64& y) {
 }
 
 int main() {
-    i64 a, b, x, y;
+    int a, b, x, y;
     cin >> a >> b;
     extgcd(a, b, x, y);
     cout << x << " " << y << endl;

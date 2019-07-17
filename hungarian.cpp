@@ -1,28 +1,21 @@
 // MOVED
+// added
 
 #include <bits/stdc++.h>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
 // 二部グラフの最大重みマッチング
 class Hungarian {
     int n, p, q;
-    vvi mat;
-    vi fx, fy, x, y;
-    const i64 INF = 1e9;
+    vector<vector<int>> mat;
+    vector<int> fx, fy, x, y;
+    const int INF = 1e9;
 
 public:
-    Hungarian(const vvi& mat) : mat(mat) {
-        n = mat.size();
-        fx.assign(n, INF);
-        fy.assign(n, 0);
-        x.assign(n, -1);
-        y.assign(n, -1);
-    } 
+    Hungarian(const vector<vector<int>> &mat) : n(mat.size()), fx(n, INF), fy(n), x(n, -1), y(n, -1), mat(mat) {}
 
-    i64 run() {
+    int run() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 fx[i] = max(fx[i], mat[i][j]);
@@ -30,7 +23,7 @@ public:
         }
 
         for (int i = 0; i < n;) {
-            vi t(n, -1), s(n + 1, i);
+            vector<int> t(n, -1), s(n + 1, i);
             for (p = q = 0; p <= q && x[i] < 0; p++) {
                 for (int k = s[p], j = 0; j < n && x[i] < 0; j++) {
                     if (fx[k] + fy[j] == mat[k][j] && t[j] < 0) {
@@ -47,7 +40,7 @@ public:
                 }
             }
             if (x[i] < 0) {
-                i64 d = INF;
+                int d = INF;
                 for (int k = 0; k <= q; k++) {
                     for (int j = 0; j < n; j++) {
                         if (t[j] < 0) {
@@ -65,7 +58,7 @@ public:
                 i++;
             }
         }
-        i64 ret = 0;
+        int ret = 0;
         for (int i = 0; i < n; i++) {
             ret += mat[i][x[i]];
         }
@@ -84,7 +77,7 @@ public:
 int main() {
     int n, m;
     cin >> n >> m;
-    vvi b(n, vi(m, -1));
+    vector<vector<int>> b(n, vector<int>(m, -1));
     int wcnt = 0, bcnt = 0;
     for (int i = 0; i < n; i++) {
         string s;
@@ -99,7 +92,7 @@ int main() {
     }
 
     int k = max(wcnt, bcnt);
-    vvi mat(k, vi(k));
+    vector<vector<int>> mat(k, vector<int>(k));
 
     auto is_next = [](int i, int j, int ii, int jj) {
         return abs(i - ii) + abs(j - jj) == 1;

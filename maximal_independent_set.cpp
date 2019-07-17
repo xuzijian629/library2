@@ -1,11 +1,12 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
-using vi = vector<int>;
-using vvi = vector<vi>;
 
 struct UnionFind {
     int n, cnt;
-    vi par, rank, sz;
+    vector<int> par, rank, sz;
 
     UnionFind(int n) : n(n), cnt(n), par(n), rank(n), sz(n, 1) {
         iota(par.begin(), par.end(), 0);
@@ -41,21 +42,24 @@ struct UnionFind {
     }
 };
 
-struct MaximalIndependentSetForest {
-    struct Edge { int to, type; }; // type 1: real edge, type 0: dummy edge to make connected
+struct MaximumIndependentSetForest {
+    struct Edge {
+        int to, type;
+    }; // type 1: real edge, type 0: dummy edge to make connected
     vector<vector<Edge>> G;
-    MaximalIndependentSetForest(const vector<pair<int, int>>& edges) {
+
+    MaximumIndependentSetForest(const vector<pair<int, int>> &edges) {
         map<int, int> mp;
-        for (auto& e : edges) {
+        for (auto &e : edges) {
             mp[e.first], mp[e.second];
         }
         int N = 0;
-        for (auto& p : mp) {
+        for (auto &p : mp) {
             p.second = N++;
         }
         UnionFind uf(N);
         G = vector<vector<Edge>>(N);
-        for (auto& e : edges) {
+        for (auto &e : edges) {
             int a = mp[e.first], b = mp[e.second];
             uf.unite(a, b);
             G[a].push_back({b, 1});
@@ -72,7 +76,7 @@ struct MaximalIndependentSetForest {
 
     pair<int, int> dfs(int v, int p) {
         pair<int, int> ret = {1, 0};
-        for (Edge& e : G[v]) {
+        for (Edge &e : G[v]) {
             if (e.to != p) {
                 pair<int, int> tmp = dfs(e.to, v);
                 ret.second += max(tmp.first, tmp.second);
@@ -85,6 +89,7 @@ struct MaximalIndependentSetForest {
         }
         return ret;
     }
+
     int solve() {
         if (G.empty()) return 0;
         pair<int, int> ans = dfs(0, -1);
@@ -95,7 +100,7 @@ struct MaximalIndependentSetForest {
 struct MaxCutFree {
     int solve(int n, vector<int> as, vector<int> bs) {
         int m = as.size();
-        vvi adj(n);
+        vector<vector<int>> adj(n);
         for (int i = 0; i < m; i++) {
             int a = as[i], b = bs[i];
             adj[a].push_back(b);
@@ -116,7 +121,7 @@ struct MaxCutFree {
                 bridges.emplace_back(as[i], bs[i]);
             }
         }
-        MaximalIndependentSetForest mis(bridges);
+        MaximumIndependentSetForest mis(bridges);
         return n - ss.size() + mis.solve();
     }
 };

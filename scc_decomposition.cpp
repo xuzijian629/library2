@@ -1,25 +1,26 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
 class SCCDecomp {
     int n;
-    vvi adj;
-    
+    vector<vector<int>> adj;
+
 public:
-    vvi scc;
+    vector<vector<int>> scc;
+
     SCCDecomp(int n) : n(n), adj(n) {}
-    
+
     void addArc(int a, int b) {
         adj[a].push_back(b);
     }
 
     int run() {
-        vi num(n), low(n);
+        vector<int> num(n), low(n);
         stack<int> S;
-        vi inS(n);
+        vector<int> inS(n);
         int t = 0;
         function<void(int)> visit = [&](int v) {
             low[v] = num[v] = ++t;
@@ -27,14 +28,14 @@ public:
             inS[v] = 1;
             for (int s: adj[v]) {
                 if (!num[s]) {
-                    visit(s);
+                    vector<int> sit(s);
                     low[v] = min(low[v], low[s]);
                 } else if (inS[s]) {
                     low[v] = min(low[v], num[s]);
                 }
             }
             if (low[v] == num[v]) {
-                scc.push_back(vi());
+                scc.emplace_back();
                 while (1) {
                     int w = S.top();
                     S.pop();
@@ -49,7 +50,7 @@ public:
 
         for (int i = 0; i < n; i++) {
             if (num[i] == 0) {
-                visit(i);
+                vector<int> sit(i);
             }
         }
 
@@ -68,7 +69,7 @@ int main() {
     }
 
     int n = s.run();
-    vi scc(v);
+    vector<int> scc(v);
     for (int i = 0; i < n; i++) {
         for (int v: s.scc[i]) {
             scc[v] = i;

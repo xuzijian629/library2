@@ -1,20 +1,21 @@
+// added
+
 #include <iostream>
 #include <vector>
 #include <cassert>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
 
 // before: ss[i]: 集合族iの共通部分の大きさ
 // after : ss[i]: 集合族iに含まれていて、集合族~iに含まれない部分の大きさ
-void moebius(vi& ss) {
+void moebius(vector<int> &ss) {
     int N = ss.size();
     int n = 0;
     while (N > 1) {
         n++;
         N >>= 1;
     }
-    
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < (1 << n); j++) {
             if (!(j & (1 << i))) {
@@ -24,10 +25,10 @@ void moebius(vi& ss) {
     }
 }
 
-i64 intsqrt(i64 n) {
-    i64 l = 0, r = n + 1;
+int intsqrt(int n) {
+    int l = 0, r = n + 1;
     while (l < r - 1) {
-        i64 m = (l + r) / 2;
+        int m = (l + r) / 2;
         if (__int128_t(m) * m <= n) {
             l = m;
         } else {
@@ -37,16 +38,16 @@ i64 intsqrt(i64 n) {
     return l;
 }
 
-i64 cntsqrt(i64 l, i64 r) {
+int cntsqrt(int l, int r) {
     return intsqrt(r) - intsqrt(l - 1);
 }
 
-i64 cntpx(i64 l, i64 r, i64 p) {
+int cntpx(int l, int r, int p) {
     return r / p - (l - 1) / p;
 }
 
-i64 get_min_p(i64 n) {
-    for (i64 i = 2; i * i <= n; i++) {
+int get_min_p(int n) {
+    for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {
             return i;
         }
@@ -54,10 +55,10 @@ i64 get_min_p(i64 n) {
     return n;
 }
 
-i64 cntpxsqrt(i64 l, i64 r, i64 p) {
-    i64 q = 1;
+int cntpxsqrt(int l, int r, int p) {
+    int q = 1;
     while (p != 1) {
-        i64 k = get_min_p(p);
+        int k = get_min_p(p);
         int cnt = 0;
         while (p % k == 0) {
             p /= k;
@@ -67,28 +68,28 @@ i64 cntpxsqrt(i64 l, i64 r, i64 p) {
             q *= k;
         }
     }
-    
+
     return intsqrt(r) / q - intsqrt(l - 1) / q;
 }
 
-i64 gcd(i64 a, i64 b) {
+int gcd(int a, int b) {
     return b ? gcd(b, a % b) : a;
 }
 
-i64 lcm(i64 a, i64 b) {
+int lcm(int a, int b) {
     return a / gcd(a, b) * b;
 }
 
-i64 cntrange(i64 l, i64 r, int zone) {
+int cntrange(int l, int r, int zone) {
     if (r < l) return 0;
-    vi ss(1 << zone);
-    vi ps;
+    vector<int> ss(1 << zone);
+    vector<int> ps;
     for (int i = 2; i <= zone; i++) {
         ps.push_back(i);
     }
-    
+
     for (int i = 0; i < (1 << zone); i++) {
-        i64 p = 1;
+        int p = 1;
         for (int j = 0; j < zone - 1; j++) {
             if ((i >> j) & 1) {
                 p = lcm(p, ps[j]);
@@ -107,8 +108,8 @@ i64 cntrange(i64 l, i64 r, int zone) {
     assert(ss[0] == r - l + 1);
 
     moebius(ss);
-    
-    i64 cnt = r - l + 1, tmp = 0;;
+
+    int cnt = r - l + 1, tmp = 0;;
     for (int i = 0; i < (1 << zone); i++) {
         assert(ss[i] >= 0);
         if (__builtin_popcount(i) & 1) {
@@ -123,19 +124,19 @@ i64 cntrange(i64 l, i64 r, int zone) {
 }
 
 int main() {
-    i64 n;
+    int n;
     cin >> n;
-    i64 B = 1;
+    int B = 1;
     for (int i = 0; i < 18; i++) {
         B *= 10;
     }
-    
+
     if (n <= B) {
         cout << intsqrt(n) << endl;
         return 0;
     }
-    
-    i64 cnt = intsqrt(B);
+
+    int cnt = intsqrt(B);
     cnt += cntrange(B + 1, min(n, 2 * B), 1);
     cnt += cntrange(2 * B + 1, min(n, 3 * B), 2);
     cnt += cntrange(3 * B + 1, min(n, 4 * B), 3);

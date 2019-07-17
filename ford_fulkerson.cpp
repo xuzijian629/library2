@@ -1,8 +1,8 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
 class FordFulkerson {
     struct edge {

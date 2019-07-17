@@ -1,25 +1,24 @@
+// added
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
-int longest_path(const vvi &adj) {
+using namespace std;
+
+int longest_path(const vector<vector<int>> &adj) {
     int n = adj.size();
-    vvi inv(n);
+    vector<vector<int>> inv(n);
     for (int a = 0; a < n; a++) {
         for (auto b : adj[a]) {
             inv[b].push_back(a);
         }
     }
-    vi len(n, -1);
+    vector<int> len(n, -1);
     function<void(int)> set_len = [&](int v) {
         if (len[v] != -1) return;
         if (inv[v].empty()) {
             len[v] = 0;
             return;
         }
-        i64 nax = 0;
+        int nax = 0;
         for (int u : inv[v]) {
             set_len(u);
             nax = max(nax, len[u]);
@@ -37,7 +36,7 @@ int longest_path(const vvi &adj) {
 int main() {
     int n, m;
     cin >> n >> m;
-    vvi adj(n);
+    vector<vector<int>> adj(n);
     for (int i = 0; i < m; i++) {
         int a, b;
         cin >> a >> b;

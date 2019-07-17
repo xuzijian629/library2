@@ -1,13 +1,12 @@
+// added
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
-constexpr i64 MOD = 1e9 + 7;
 
-i64 partition_count(int n, int m, i64 mod) {
+using namespace std;
+constexpr int MOD = 1e9 + 7;
+
+int partition_count(int n, int m, int mod) {
     // divide n (undistinguished) items into m (undistinguished) groups, groups can have 0 items
-    vvi dp(m + 1, vi(n + 1));
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1));
     dp[0][0] = 1;
     for (int i = 1; i <= m; i++) {
         for (int j = 0; j <= n; j++) {

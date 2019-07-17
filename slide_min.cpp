@@ -1,17 +1,18 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
 struct SlideMin {
     // data[i]: mininum over [max(0, i + 1 - width), i + 1)
     int n;
-    vi data;
-    SlideMin(const vi &as, int width, bool minimum = true) : n(as.size()), data(as.size()) {
-        using ii = pair<i64, int>;
+    vector<int> data;
+
+    SlideMin(const vector<int> &as, int width, bool minimum = true) : n(as.size()), data(as.size()) {
+        using ii = pair<int, int>;
         deque<ii> deq;
-        auto comp = [&](ii &e, i64 v) {
+        auto comp = [&](ii &e, int v) {
             return minimum ? e.first >= v : e.first <= v;
         };
         for (int i = 0; i < n; i++) {
@@ -34,12 +35,12 @@ int main() {
     cout.tie(nullptr);
     int n, m, k;
     cin >> n >> m >> k;
-    vi as(n);
+    vector<int> as(n);
     for (int i = 0; i < n; i++) {
         cin >> as[i];
     }
 
-    vi dp(as);
+    vector<int> dp(as);
     for (int i = 0; i < k - 1; i++) {
         SlideMin smax(dp, m, false);
         for (int j = 0; j < n; j++) {
@@ -50,7 +51,7 @@ int main() {
             }
         }
     }
-    i64 nax = -1;
+    int nax = -1;
     for (int i = 0; i < n; i++) {
         nax = max(nax, dp[i]);
     }

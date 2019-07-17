@@ -1,15 +1,15 @@
-#include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
+// added
 
-i64 inv_number(vi& as) {
-    i64 cnt = 0;
+#include <bits/stdc++.h>
+
+using namespace std;
+
+long long inv_number(vector<int> &as) {
+    int cnt = 0;
     int n = as.size();
     if (n > 1) {
-        vi bs(as.begin(), as.begin() + n / 2);
-        vi cs(as.begin() + n / 2, as.end());
+        vector<int> bs(as.begin(), as.begin() + n / 2);
+        vector<int> cs(as.begin() + n / 2, as.end());
         cnt += inv_number(bs);
         cnt += inv_number(cs);
         for (int i = 0, j = 0, k = 0; i < n; i++) {

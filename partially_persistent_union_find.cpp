@@ -1,23 +1,23 @@
+// added
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
-class ppUF {
-    vi rank, par, time;
+using namespace std;
+
+class PartiallyParsistentUnionFind {
+    vector<int> rank, par, time;
     const int INF = 1e9;
 public:
-    ppUF(int n) {
+    PartiallyParsistentUnionFind(int n) {
         rank.resize(n);
         par.resize(n, -1);
         time.resize(n, INF);
     }
+
     int find(int t, int x) {
         if (time[x] > t) return x;
         return find(t, par[x]);
     }
-    
+
     bool unite(int t, int x, int y) {
         x = find(t, x);
         y = find(t, y);
@@ -34,7 +34,7 @@ public:
         }
         return true;
     }
-    
+
     bool same(int t, int x, int y) {
         return find(t, x) == find(t, y);
     }
@@ -56,28 +56,28 @@ int main() {
         int c, d;
         cin >> c >> d;
         c--, d--;
-        qs.push_back(ii(c, d));
+        qs.emplace_back(c, d);
     }
     reverse(qs.begin(), qs.end());
     for (int i = 0; i < q; i++) {
         ord[qs[i]] = i + 1;
     }
-    
-    ppUF uf(n);
+
+    PartiallyParsistentUnionFind uf(n);
     vector<pair<int, ii>> vs;
-    for (auto& p: ord) {
+    for (auto &p: ord) {
         if (p.second == 1e9) {
             uf.unite(0, p.first.first, p.first.second);
         } else {
-            vs.push_back(make_pair(p.second, p.first));
+            vs.emplace_back(p.second, p.first);
         }
     }
-    
+
     sort(vs.begin(), vs.end());
-    for (auto& v: vs) {
+    for (auto &v: vs) {
         uf.unite(v.first, v.second.first, v.second.second);
     }
-    
+
     for (int i = 1; i < n; i++) {
         int l = -1, r = q + 1;
         while (l < r - 1) {

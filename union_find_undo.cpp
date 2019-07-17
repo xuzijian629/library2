@@ -1,10 +1,12 @@
+//added
+
 #include <bits/stdc++.h>
 
 using namespace std;
 
 struct UnionFindUndo {
     vector<int> data;
-    stack<pair<int, int> > history;
+    stack<pair<int, int>> history;
 
     UnionFindUndo(int sz) {
         data.assign(sz, -1);

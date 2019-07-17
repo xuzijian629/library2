@@ -1,31 +1,29 @@
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
-i64 modpow(i64 a, i64 n, i64 mod) {
+using namespace std;
+
+int modpow(int a, int n, int mod) {
     if (n == 0) return 1;
     if (n % 2 == 0) {
-        i64 t = modpow(a, n / 2, mod);
+        int t = modpow(a, n / 2, mod);
         return t * t % mod;
     }
     return a * modpow(a, n - 1, mod) % mod;
 }
 
-i64 modinv(i64 a, i64 mod) {
+int modinv(int a, int mod) {
     return modpow(a, mod - 2, mod);
 }
 
-pair<i64, i64> chrem(vi ps, vi rs) {
+pair<int, int> chrem(const vector<int> &ps, const vector<int> &rs) {
     using Long = __int128_t;
-    i64 P = 1;
-    for (i64 p: ps) {
+    int P = 1;
+    for (int p: ps) {
         P *= p;
     }
     Long ret = 0;
     for (int i = 0; i < ps.size(); i++) {
-        i64 p = P / ps[i];
+        int p = P / ps[i];
         ret += Long(1) * rs[i] * modinv(p, ps[i]) * p;
     }
 
@@ -33,7 +31,7 @@ pair<i64, i64> chrem(vi ps, vi rs) {
 }
 
 int main() {
-    vi rs(3);
+    vector<int> rs(3);
     for (int i = 0; i < 3; i++) {
         cin >> rs[i];
     }

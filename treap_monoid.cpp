@@ -1,3 +1,5 @@
+// hoge
+
 #include <bits/stdc++.h>
 
 template<class ValueMonoid, class OperatorMonoid,

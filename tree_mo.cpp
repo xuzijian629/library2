@@ -1,3 +1,5 @@
+// added
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -90,12 +92,7 @@ struct TreeMo {
 
     TreeMo() {}
 
-    TreeMo(int n, function<void(int)> add, function<void(int)> del, function<int()> get) : n(n), adj(n),
-                                                                                           block((int) sqrt(2 * n - 1)),
-                                                                                           nl(0), nr(0), visited(n),
-                                                                                           in(n), add(move(add)),
-                                                                                           del(move(del)),
-                                                                                           get(move(get)) {}
+    TreeMo(int n, function<void(int)> add, function<void(int)> del, function<int()> get) : n(n), adj(n), block((int) sqrt(2 * n - 1)), nl(0), nr(0), visited(n), in(n), add(move(add)), del(move(del)), get(move(get)) {}
 
     void dfs(int v, int p, int d) {
         in[v] = vs.size();

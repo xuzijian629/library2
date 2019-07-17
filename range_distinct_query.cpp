@@ -1,3 +1,4 @@
+// online版がある
 // https://www.spoj.com/problems/DQUERY/
 
 #include <bits/stdc++.h>

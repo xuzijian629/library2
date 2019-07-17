@@ -1,4 +1,7 @@
+//added
+
 #include <bits/stdc++.h>
+
 using namespace std;
 
 int par[101010];

@@ -1,14 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
+#define int long long
 
 class Blossom {
     // 1-based vertex index
-    vi vis, par, orig, match, aux;
+    vector<int> vis, par, orig, match, aux;
     int t = 0, N;
-    vvi conn;
+    vector<vector<int>> conn;
     queue<int> Q;
 
     void augment(int u, int v) {
@@ -75,7 +73,7 @@ class Blossom {
 
 public:
     Blossom(int n) : vis(n + 1), par(n + 1), orig(n + 1), match(n + 1), aux(n + 1), N(n), conn(n + 1) {}
-    
+
     void addEdge(int u, int v) {
         assert(1 <= u && u <= N && 1 <= v && v <= N);
         conn[u].push_back(v);
@@ -84,7 +82,7 @@ public:
 
     int Match() {
         int ans = 0;
-        vi V(N - 1);
+        vector<int> V(N - 1);
         iota(V.begin(), V.end(), 1);
         shuffle(V.begin(), V.end(), mt19937(chrono::steady_clock::now().time_since_epoch().count()));
         for (int x : V) {
@@ -109,19 +107,19 @@ public:
 struct MaximizingGCD {
     int maximumGCDPairing(vector<int> as) {
         int n = as.size();
-        i64 sum = 0;
+        int sum = 0;
         for (int a : as) {
             sum += a;
         }
         set<int> divs;
-        for (i64 i = 1; i * i <= sum; i++) {
+        for (int i = 1; i * i <= sum; i++) {
             if (sum % i == 0) {
                 divs.insert(i);
                 divs.insert(sum / i);
             }
         }
 
-        vi ds;
+        vector<int> ds;
         for (int d : divs) {
             ds.push_back(d);
         }
@@ -142,7 +140,7 @@ struct MaximizingGCD {
                 return true;
             }
             return false;
-        };  
+        };
 
         for (int d : ds) {
             if (ok(d)) {
@@ -153,7 +151,7 @@ struct MaximizingGCD {
     }
 };
 
-int main() {
+int32_t main() {
     MaximizingGCD solve;
     vector<int> as = {505, 796395095, 891890495, 554953895, 808647335, 581980895, 808647335, 808647335, 655854695, 953512055, 459458495, 943421975, 514593575, 714713495, 814773455, 892370975, 843241895, 796395095, 349188335, 349188335, 554953895, 937295855, 972971495, 673872695, 810809495, 892370975, 843241895, 972971495, 972971495, 937295855};
     cout << solve.maximumGCDPairing(as) << endl;

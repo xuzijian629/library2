@@ -1,3 +1,5 @@
+// HLDと被っているので
+
 // verified: https://www.spoj.com/submit/QTREE2/
 
 #include <bits/stdc++.h>

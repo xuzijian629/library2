@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
-using namespace std;
-using i64 = int64_t;
-using vi = vector<i64>;
-using vvi = vector<vi>;
 
-vi rbd(vi mat) {
+using namespace std;
+
+
+vector<long long> rbd(vector<long long> mat) {
     int n = mat.size();
     int rk = 0;
     for (int i = 62; i >= 0; i--) {
@@ -31,7 +30,7 @@ vi rbd(vi mat) {
 int main() {
     int n;
     cin >> n;
-    vi as(n), bs(n);
+    vector<long long> as(n), bs(n);
     for (int i = 0; i < n; i++) {
         cin >> as[i];
     }
@@ -39,5 +38,5 @@ int main() {
         cin >> bs[i];
     }
 
-    cout << (rbd(as) == rbd(bs) ? "Yes" : "No") << endl; 
+    cout << (rbd(as) == rbd(bs) ? "Yes" : "No") << endl;
 }

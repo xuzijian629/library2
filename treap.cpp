@@ -1,4 +1,7 @@
+// added
+
 #include <bits/stdc++.h>
+
 using namespace std;
 using i64 = int64_t;
 using vi = vector<i64>;
@@ -15,6 +18,7 @@ public:
             random();
         }
     }
+
     uint64_t random() {
         x = x ^ (x << 7);
         return x = x ^ (x >> 9);
@@ -27,6 +31,7 @@ struct SumMonoid {
     static constexpr T id() {
         return 0;
     }
+
     static T op(T a, T b) {
         return a + b;
     }
@@ -36,6 +41,7 @@ struct MinMonoid {
     static constexpr T id() {
         return 2e18;
     }
+
     static T op(T a, T b) {
         return min(a, b);
     }
@@ -46,6 +52,7 @@ struct UpdateMonoid {
     static constexpr T id() {
         return 2e18;
     }
+
     static T op(T a, T b) {
         return b;
     }
@@ -61,13 +68,17 @@ struct Modifier {
 template<class Monoid, class OperatorMonoid>
 class ImplicitTreap {
     xorshift rnd;
+
     struct Node {
         T value, acc, lazy;
         int priority, cnt;
         bool rev;
         Node *l, *r;
-        Node(T value, int priority) : value(value), acc(Monoid::id()), lazy(OperatorMonoid::id()), priority(priority), cnt(1), rev(false), l(nullptr), r(nullptr) {}
+
+        Node(T value, int priority) : value(value), acc(Monoid::id()), lazy(OperatorMonoid::id()), priority(priority),
+                                      cnt(1), rev(false), l(nullptr), r(nullptr) {}
     } *root = nullptr;
+
     using Tree = Node *;
 
     int cnt(Tree t) {
@@ -116,7 +127,7 @@ class ImplicitTreap {
         pushup(t);
     }
 
-    void split(Tree t, int key, Tree& l, Tree& r) {
+    void split(Tree t, int key, Tree &l, Tree &r) {
         if (!t) {
             l = r = nullptr;
             return;
@@ -131,14 +142,14 @@ class ImplicitTreap {
         pushup(t);
     }
 
-    void insert(Tree& t, int key, Tree item) {
+    void insert(Tree &t, int key, Tree item) {
         Tree t1, t2;
         split(t, key, t1, t2);
         merge(t1, t1, item);
         merge(t, t1, t2);
     }
 
-    void merge(Tree& t, Tree l, Tree r) {
+    void merge(Tree &t, Tree l, Tree r) {
         pushdown(l);
         pushdown(r);
         if (!l || !r) {
@@ -151,7 +162,7 @@ class ImplicitTreap {
         pushup(t);
     }
 
-    void erase(Tree& t, int key) {
+    void erase(Tree &t, int key) {
         Tree t1, t2, t3;
         split(t, key + 1, t1, t2);
         split(t1, key, t1, t3);
@@ -162,7 +173,7 @@ class ImplicitTreap {
         if (l >= r) return;
         Tree t1, t2, t3;
         split(t, l, t1, t2);
-        split(t2, r - l, t2 , t3);
+        split(t2, r - l, t2, t3);
         t2->lazy = OperatorMonoid::op(t2->lazy, x);
         t2->acc = Modifier::op(t2->acc, x, cnt(t2));
         merge(t2, t2, t3);
@@ -189,7 +200,8 @@ class ImplicitTreap {
                 if (t->l && Monoid::op(t->l->acc, x) != x) {
                     return find(t->l, x, offset, left);
                 } else {
-                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->r, x, offset + cnt(t->l) + 1, left);
+                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->r, x, offset + cnt(t->l) + 1,
+                                                                                      left);
                 }
             } else {
                 if (t->r && Monoid::op(t->r->acc, x) != x) {
@@ -228,6 +240,7 @@ class ImplicitTreap {
 
 public:
     ImplicitTreap() {}
+
     ImplicitTreap(vector<T> as) {
         ::reverse(as.begin(), as.end());
         for (T a : as) {

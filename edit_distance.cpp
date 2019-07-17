@@ -1,7 +1,9 @@
+// added
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int edit_distance(string& s, string& t) {
+int edit_distance(const string &s, const string &t) {
     vector<vector<int>> dp(s.size() + 1, vector<int>(t.size() + 1));
     for (int i = 0; i <= s.size(); i++) {
         for (int j = 0; j <= t.size(); j++) {

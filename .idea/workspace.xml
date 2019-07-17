@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b8da8c58-ce74-4007-b672-2413a301112c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/avl_tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/avl_tree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/baby_step_giant_step.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/baby_step_giant_step.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bellman_ford.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bellman_ford.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bigint.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binary_indexed_tree_add_sum.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/binary_indexed_tree_add_sum.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binary_indexed_tree_range_add_sum.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/binary_indexed_tree_range_add_sum.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binary_trie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/binary_trie.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bipartite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bipartite.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bipartite_matching.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bipartite_matching.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blossom.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/blossom.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blossom_weighted.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/blossom_weighted.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/calendar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/calendar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/centroid_decomposition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/centroid_decomposition.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/combination_mod.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/combination_mod.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/combination_mod_nonprime.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/combination_mod_nonprime.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convex_hull.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/convex_hull.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convex_hull_2d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/convex_hull_2d.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convex_hull_3d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/convex_hull_3d.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convex_hull_trick.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/convex_hull_trick.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/crt.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/determinant.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/determinant.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dijkstra.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/dijkstra.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/dinic.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distinct_elements.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/distinct_elements.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doubling.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/doubling.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edit_distance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/edit_distance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extgcd.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/extgcd.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fft.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fft.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fibonacci.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fibonacci.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flex_bitset.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/flex_bitset.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ford_fulkerson.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ford_fulkerson.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fraction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcd_lcm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/gcd_lcm.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/geometry.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry_3d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/geometry_3d.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry_integer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/geometry_integer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hld.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hld.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hld_edge_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hld_edge_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hungarian.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hungarian.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inversion_number.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/inversion_number.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kmp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kmp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knapsack_small_value.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knapsack_small_value.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knapsack_small_weight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knapsack_small_weight.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kruskal.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/kruskal.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/largest_rectangle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/largest_rectangle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lazy_segtree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lazy_segtree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lazy_segtree_monoid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lazy_segtree_monoid.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lca.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lca.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lca_weighted_tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lca_weighted_tree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lcp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lcp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lcs.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lcs.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/longest_path.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/longest_path.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lowlink.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lowlink.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manacher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/manacher.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matrix.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/matrix.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matrix_fixed_size.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/matrix_fixed_size.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maximal_independent_set.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/maximal_independent_set.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maximum_matching.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/maximum_matching.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maxrope.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/maxrope.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miller_rabin.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/miller_rabin.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mis.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/mis.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/mo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modint.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modulo_linear_transformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modulo_linear_transformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/moebius.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/moebius.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pair_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/pair_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/palindrome.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/palindrome.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partially_persistent_union_find.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/partially_persistent_union_find.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partition_count.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/partition_count.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pbds_rbtree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/pbds_rbtree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pbds_trie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/pbds_trie.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistent_segtree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/persistent_segtree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/potential_union_find.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/potential_union_find.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_count.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_count.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_distinct_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_distinct_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_distinct_query_faster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_distinct_query_faster.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_find.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_find.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_mode_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_mode_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/range_or_update.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/range_or_update.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolling_hash.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/rolling_hash.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scc_decomposition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/scc_decomposition.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segtree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segtree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segtree_monoid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segtree_monoid.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sieve.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sieve.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slide_min.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/slide_min.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparse_table.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sparse_table.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/split_string.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/split_string.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqrt_decomposition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sqrt_decomposition.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stirling_bell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/stirling_bell.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/suffix_array.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/suffix_array.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ternary_2d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ternary_2d.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tmp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/topological_sort.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/topological_sort.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/treap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/treap.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/treap_monoid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/treap_monoid.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_diameter_dp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree_diameter_dp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_isomorphism.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree_isomorphism.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_kth_node_on_path.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree_kth_node_on_path.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_mo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree_mo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_sqrt_decomposition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree_sqrt_decomposition.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/trie.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/union_find.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/union_find.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/union_find_undo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/union_find_undo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/waveletmatrix.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/waveletmatrix.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/z_algorithm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/z_algorithm.cpp" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/union_find.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="17" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pbds_rbtree.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/potential_union_find.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/union_find_undo.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/pbds_rbtree.cpp" />
+        <option value="$PROJECT_DIR$/potential_union_find.cpp" />
+        <option value="$PROJECT_DIR$/union_find_undo.cpp" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/lib.iml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="481" />
+    <option name="y" value="23" />
+    <option name="width" value="1199" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="lib" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b8da8c58-ce74-4007-b672-2413a301112c" name="Default Changelist" comment="" />
+      <created>1562768949686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1562768949686</updated>
+      <workItem from="1562768951085" duration="323000" />
+      <workItem from="1562769276600" duration="20000" />
+      <workItem from="1562769298992" duration="56000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="399000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="481" y="23" width="1199" height="1027" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26274848" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32941177" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/union_find.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="17" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pbds_rbtree.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/potential_union_find.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/union_find_undo.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
